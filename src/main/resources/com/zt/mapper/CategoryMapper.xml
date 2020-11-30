@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.zt.dao.CategoryDao">
+    <!-- sql字段 -->
+    <sql id="query">
+        id,cate_name cateName,levels,parent_id parentId
+    </sql>
+    <!-- 分页查询 -->
+    <select id="queryBypage" resultType="com.zt.entity.Category">
+        select <include refid="query"/> from yx_category
+        limit #{page},#{end}
+    </select>
+    <!-- 查寻总条数 -->
+    <select id="count" resultType="Integer">
+        select count(*) from yx_category
+    </select>
+    <!-- 添加类别 -->
+    <insert id="inster" parameterType="Category">
+        insert into yx_category values(#{id},#{cateName},#{levels},#{parentId})
+    </insert>
+    <!-- 修改用户信息 -->
+    <update id="update" parameterType="Category">
+        update yx_category
+        <set>
+            <if test="cateName !=null">cate_name=#{cateName},</if>
+            <if test="levels !=null">levels=#{levels},</if>
+            <if test="parentId !=null">parent_id=#{parentId}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--查询总条数-->
+    <select id="queryFile" resultType="Category">
+        select <include refid="query"/> from yx_category
+        where parent_id=#{id}
+        limit #{page},#{end}
+    </select>
+    <!-- 查询总条数 -->
+    <select id="counte" resultType="Integer">
+        select count(*) from yx_category
+        where parent_id=#{id}
+    </select>
+
+    <!-- 根据id查数据 -->
+    <select id="queryById" resultType="Category">
+        select <include refid="query"/> from yx_category where id=#{id}
+    </select>
+    <!-- 根据id删除 -->
+    <delete id="delete" parameterType="Category">
+        delete from yx_category where id=#{id}
+    </delete>
+</mapper>
