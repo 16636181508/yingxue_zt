@@ -20,6 +20,11 @@ public class Video {
         List<com.zt.entity.Video> videos = videoMapper.selectAll();
         for (com.zt.entity.Video video : videos) {
             System.out.println(video);
+            
+             System.out.println(video);
+            
+            
+            
         }
     }
 }
